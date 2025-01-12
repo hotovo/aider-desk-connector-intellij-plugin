@@ -1,0 +1,46 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin url="https://github.com/hotovo/aider-desk-connector-intellij-plugin">
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.hotovo.plugins.aider-desk-connector</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>AiderDesk Connector</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="aider-desk@hotovo.com" url="https://www.hotovo.com">Hotovo</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+    The AiderDesk Connector plugin integrates IntelliJ IDEA with AiderDesk's AI-powered pair programming capabilities.<br/>
+    Learn more about AiderDesk: <a href="https://github.com/hotovo/aider-desk">https://github.com/hotovo/aider-desk</a><br/><br/>
+
+    The plugin automatically connects to AiderDesk and:<br/>
+    - Tracks currently opened files in your project<br/>
+    - Provides real-time file status updates<br/>
+    - Enables seamless integration with Aider's workflow<br/><br/>
+
+    Start your AiderDesk and the plugin will automatically connect on port 24337 to communicate with the server.<br/><br/>
+  ]]></description>
+
+    <change-notes><![CDATA[
+    <p>0.1.0</p>
+    <ul>
+      <li>Initial release.</li>
+    </ul>
+  ]]></change-notes>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>Git4Idea</depends>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="com.hotovo.plugins.aiderdesk.AiderDeskConnectorAppService"/>
+        <postStartupActivity implementation="com.hotovo.plugins.aiderdesk.AiderDeskConnectorPluginStartupActivity"/>
+    </extensions>
+</idea-plugin>
