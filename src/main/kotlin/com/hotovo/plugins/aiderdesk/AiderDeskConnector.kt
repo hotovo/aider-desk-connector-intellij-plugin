@@ -198,7 +198,10 @@ class AiderDeskConnector : CoroutineScope {
     }
 
     private fun sendInitMessage(project: Project) {
+        val isWindows = System.getProperty("os.name").lowercase().contains("win")
+
         val projectBasePath = project.basePath ?: return
+        val normalizedBasePath = if (isWindows) projectBasePath.replace("/", "\\") else projectBasePath
         val contextFiles = ArrayList<Map<String, Any>>()
 
         for (editor in FileEditorManager.getInstance(project).allEditors) {
@@ -208,9 +211,10 @@ class AiderDeskConnector : CoroutineScope {
             }
 
             val relativePath = Path.of(projectBasePath).relativize(Path.of(file.path)).toString().replace("\\", "/")
+            val normalizedPath = if (isWindows) relativePath.replace("/", "\\") else relativePath
             contextFiles.add(
                 mapOf(
-                    "path" to relativePath,
+                    "path" to normalizedPath,
                     "sourceType" to "intellij"
                 )
             )
@@ -219,7 +223,7 @@ class AiderDeskConnector : CoroutineScope {
         launch {
             val initMessage = mapOf(
                 "action" to "init",
-                "baseDir" to projectBasePath,
+                "baseDir" to normalizedBasePath,
                 "contextFiles" to contextFiles
             )
             sendMessage(initMessage, project)
@@ -236,8 +240,13 @@ class AiderDeskConnector : CoroutineScope {
     }
 
     private fun sendMessage(message: FileMessage) {
+        val isWindows = System.getProperty("os.name").lowercase().contains("win")
+        val normalizedPath = if (isWindows) message.path.replace("/", "\\") else message.path
+        val normalizedBasePath = if (isWindows) message.baseDir.replace("/", "\\") else message.baseDir
+        val normalizedMessage = if (isWindows) FileMessage(message.action, normalizedPath, normalizedBasePath) else message
+
         try {
-            val jsonMessage = mapper.writeValueAsString(message)
+            val jsonMessage = mapper.writeValueAsString(normalizedMessage)
             val project = projects.find { it.basePath == message.baseDir } ?: return
             projectSockets[project]?.emit("message", JSONObject(jsonMessage))
         } catch (e: Exception) {
