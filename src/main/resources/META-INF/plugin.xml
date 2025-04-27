@@ -26,6 +26,13 @@
   ]]></description>
 
     <change-notes><![CDATA[
+    <p>0.1.1</p>
+    <ul>
+      <li>Add Windows support via fixing path handling.</li>
+    </ul>
+  ]]></change-notes>
+
+    <change-notes><![CDATA[
     <p>0.1.0</p>
     <ul>
       <li>Initial release.</li>
