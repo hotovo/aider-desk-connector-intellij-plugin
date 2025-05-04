@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.hotovo.plugins"
-version = "0.1.1"
+version = "0.1.2"
 
 repositories {
     mavenCentral()
@@ -47,7 +47,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("232")
-        untilBuild.set("251.*")
+        untilBuild.set("253.*")
     }
 
     signPlugin {

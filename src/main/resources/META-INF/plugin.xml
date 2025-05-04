@@ -30,9 +30,7 @@
     <ul>
       <li>Add Windows support via fixing path handling.</li>
     </ul>
-  ]]></change-notes>
-
-    <change-notes><![CDATA[
+    <br/>
     <p>0.1.0</p>
     <ul>
       <li>Initial release.</li>
