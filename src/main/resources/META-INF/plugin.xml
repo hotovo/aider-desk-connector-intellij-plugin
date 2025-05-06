@@ -26,6 +26,11 @@
   ]]></description>
 
     <change-notes><![CDATA[
+    <p>0.2.0</p>
+    <ul>
+      <li>Added a status bar widget to display the connection status.</li>
+    </ul>
+    <br/>
     <p>0.1.1</p>
     <ul>
       <li>Add Windows support via fixing path handling.</li>
@@ -47,5 +52,8 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="com.hotovo.plugins.aiderdesk.AiderDeskConnectorAppService"/>
         <postStartupActivity implementation="com.hotovo.plugins.aiderdesk.AiderDeskConnectorPluginStartupActivity"/>
+        <statusBarWidgetFactory implementation="com.hotovo.plugins.aiderdesk.AiderDeskStatusBarWidgetFactory"
+                                id="AiderDeskStatus"
+                                order="first"/>
     </extensions>
 </idea-plugin>
