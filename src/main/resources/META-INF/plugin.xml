@@ -26,6 +26,11 @@
   ]]></description>
 
     <change-notes><![CDATA[
+    <p>0.3.0</p>
+    <ul>
+      <li>Added context menu actions for files and directories: 'Add to context' and 'Drop from context'.</li>
+    </ul>
+    <br/>
     <p>0.2.0</p>
     <ul>
       <li>Added a status bar widget to display the connection status.</li>
@@ -56,4 +61,31 @@
                                 id="AiderDeskStatus"
                                 order="first"/>
     </extensions>
+
+    <actions>
+        <!-- Individual File Actions -->
+        <action id="AiderDesk.AddFile"
+                class="com.hotovo.plugins.aiderdesk.actions.AiderDeskAddFileAction"
+                text="Add to Context"
+                description="Adds the selected file to the AiderDesk context.">
+        </action>
+        <action id="AiderDesk.DropFile"
+                class="com.hotovo.plugins.aiderdesk.actions.AiderDeskDropFileAction"
+                text="Drop from Context"
+                description="Removes the selected file from the AiderDesk context.">
+        </action>
+
+        <!-- Group for Project View Popup Menu -->
+        <group id="AiderDesk"
+               text="AiderDesk"
+               description="AiderDesk actions."
+               popup="true"
+               icon="/META-INF/widgetIcon.svg">
+            <reference ref="AiderDesk.AddFile"/>
+            <reference ref="AiderDesk.DropFile"/>
+            <add-to-group group-id="ProjectViewPopupMenu"/>
+            <add-to-group group-id="EditorPopupMenu"/>
+            <add-to-group group-id="EditorTabPopupMenu"/>
+        </group>
+    </actions>
 </idea-plugin>

@@ -346,7 +346,7 @@ class AiderDeskConnector : CoroutineScope {
     }
 
     // Send message based on baseDir lookup (used by file events)
-    private fun sendMessage(message: FileMessage) {
+    fun sendMessage(message: FileMessage) {
         if (!isRunning) return
         val project = projects.find { it.basePath == message.baseDir }
         if (project == null) {

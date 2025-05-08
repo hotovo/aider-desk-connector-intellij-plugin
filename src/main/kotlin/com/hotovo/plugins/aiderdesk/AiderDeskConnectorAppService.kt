@@ -41,6 +41,10 @@ class AiderDeskConnectorAppService : Disposable {
        return aiderDeskConnector.getConnectionStatus(project)
     }
 
+    fun sendFileMessage(message: FileMessage) {
+        aiderDeskConnector.sendMessage(message)
+    }
+
     // Renamed for clarity, stops the core connector logic and disconnects all projects
     private fun stopServer() {
         try {
