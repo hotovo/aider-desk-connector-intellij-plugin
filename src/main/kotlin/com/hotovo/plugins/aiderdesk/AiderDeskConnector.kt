@@ -75,6 +75,7 @@ class AiderDeskConnector : CoroutineScope {
             try {
                 LOG.info("Attempting to connect project ${project.name} to AiderDesk server on port 24337")
                 val opts = IO.Options.builder()
+                    .setForceNew(true) // Force a new connection
                     .setReconnection(true) // Enable auto-reconnection
                     .setReconnectionAttempts(Int.MAX_VALUE) // Keep trying indefinitely
                     .setReconnectionDelay(1000) // Initial delay
@@ -98,15 +99,13 @@ class AiderDeskConnector : CoroutineScope {
                         // Reconnect
                         socket.connect()
                     }
-
-
                 }
 
                 socket.on(Socket.EVENT_CONNECT_ERROR) { args ->
                     val error = args.firstOrNull()
                     LOG.debug("Socket.IO connection error for project ${project.name}: $error")
                     // Update status only if not already connected (might be a transient error during reconnect)
-                    if (projectConnectionStatus[project] != ConnectionStatus.CONNECTED && isRunning && projects.contains(project)) {
+                    if (projectConnectionStatus[project] != ConnectionStatus.DISCONNECTED && isRunning && projects.contains(project)) {
                         updateProjectStatus(project, ConnectionStatus.DISCONNECTED)
                     }
                 }
@@ -202,6 +201,13 @@ class AiderDeskConnector : CoroutineScope {
         }
     }
 
+    fun reconnect(project: Project) {
+        LOG.info("Attempting to reconnect project ${project.name}")
+        disconnectProjectInternal(project) // Ensure existing connection is closed
+        updateProjectStatus(project, ConnectionStatus.CONNECTING) // Set status to connecting
+        connectProject(project) // Re-initiate connection
+    }
+
     fun startProjectConnector(project: Project) {
         if (!isRunning) {
             LOG.warn("Cannot start project connector for ${project.name}, AiderDeskConnector is not running.")
@@ -220,7 +226,7 @@ class AiderDeskConnector : CoroutineScope {
         // --- File Editor Listener ---
         val fileEditorListener = object : FileEditorManagerListener {
             override fun fileOpened(source: FileEditorManager, file: VirtualFile) {
-                 if (!isRunning || !file.isFile || file.fileType.isBinary) {
+                if (!isRunning || !file.isFile || file.fileType.isBinary) {
                     return
                 }
 
@@ -243,7 +249,6 @@ class AiderDeskConnector : CoroutineScope {
                     Path.of(basePath).relativize(Path.of(file.path)).toString().replace("\\", "/")
                 } ?: return
 
-                sendMessage(FileMessage("drop-file", relativePath, project.basePath!!, "intellij"))
                 sendMessage(FileMessage("drop-file", relativePath, project.basePath!!, "intellij"))
             }
         }

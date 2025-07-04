@@ -26,6 +26,11 @@
   ]]></description>
 
     <change-notes><![CDATA[
+    <p>0.4.0</p>
+    <ul>
+      <li>Added 'Disconnect' and 'Connect' actions to status bar widget.</li>
+    </ul>
+    <br/>
     <p>0.3.0</p>
     <ul>
       <li>Added context menu actions for files and directories: 'Add to context' and 'Drop from context'.</li>

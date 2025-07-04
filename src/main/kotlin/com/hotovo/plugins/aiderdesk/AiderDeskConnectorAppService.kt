@@ -45,6 +45,14 @@ class AiderDeskConnectorAppService : Disposable {
         aiderDeskConnector.sendMessage(message)
     }
 
+    fun reconnect(project: Project) {
+        aiderDeskConnector.reconnect(project)
+    }
+
+    fun disconnectProject(project: Project) {
+        aiderDeskConnector.disconnectProject(project)
+    }
+
     // Renamed for clarity, stops the core connector logic and disconnects all projects
     private fun stopServer() {
         try {

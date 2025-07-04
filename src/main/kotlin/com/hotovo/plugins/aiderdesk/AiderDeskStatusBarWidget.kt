@@ -70,6 +70,31 @@ class AiderDeskStatusBarWidget(project: Project) : EditorBasedWidget(project), S
         val actionGroup = DefaultActionGroup()
         actionGroup.add(statusAction)
 
+        val connectAction = object : AnAction("Connect") {
+            override fun actionPerformed(e: AnActionEvent) {
+                val appService = ApplicationManager.getApplication().getService(AiderDeskConnectorAppService::class.java)
+                project.let { appService.reconnect(it) }
+            }
+
+            override fun update(e: AnActionEvent) {
+                e.presentation.isEnabledAndVisible = currentStatus == ConnectionStatus.DISCONNECTED || currentStatus == ConnectionStatus.ERROR
+            }
+        }
+        actionGroup.addSeparator()
+        actionGroup.add(connectAction)
+
+        val disconnectAction = object : AnAction("Disconnect") {
+            override fun actionPerformed(e: AnActionEvent) {
+                val appService = ApplicationManager.getApplication().getService(AiderDeskConnectorAppService::class.java)
+                project.let { appService.disconnectProject(it) }
+            }
+
+            override fun update(e: AnActionEvent) {
+                e.presentation.isEnabledAndVisible = currentStatus == ConnectionStatus.CONNECTED
+            }
+        }
+        actionGroup.add(disconnectAction)
+
         // Create and show the popup
         val popup = JBPopupFactory.getInstance()
             .createActionGroupPopup(
