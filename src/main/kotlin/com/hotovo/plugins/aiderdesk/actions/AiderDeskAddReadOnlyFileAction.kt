@@ -76,9 +76,10 @@ class AiderDeskAddReadOnlyFileAction : AnAction() {
             }
 
             val fileMessage = FileMessage(
-                action = "add-read-only-file",
+                action = "add-file",
                 path = relativePath,
-                baseDir = projectBasePath
+                baseDir = projectBasePath,
+                readOnly = true
             )
 
             appService.sendFileMessage(fileMessage)

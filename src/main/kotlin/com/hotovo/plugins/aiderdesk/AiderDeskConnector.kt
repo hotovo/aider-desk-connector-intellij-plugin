@@ -27,7 +27,8 @@ data class FileMessage(
     val action: String,
     val path: String,
     val baseDir: String,
-    val sourceType: String = "intellij"
+    val sourceType: String = "intellij",
+    val readOnly: Boolean = false,
 )
 
 class AiderDeskConnector : CoroutineScope {
