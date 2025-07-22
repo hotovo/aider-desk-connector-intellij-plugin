@@ -93,6 +93,7 @@
                icon="/META-INF/widgetIcon.svg">
             <reference ref="AiderDesk.AddFile"/>
             <reference ref="AiderDesk.DropFile"/>
+            <reference ref="AiderDesk.AddReadOnlyFile"/>
             <add-to-group group-id="ProjectViewPopupMenu"/>
             <add-to-group group-id="EditorPopupMenu"/>
             <add-to-group group-id="EditorTabPopupMenu"/>
