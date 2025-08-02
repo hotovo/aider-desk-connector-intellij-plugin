@@ -27,7 +27,8 @@ data class FileMessage(
     val action: String,
     val path: String,
     val baseDir: String,
-    val sourceType: String = "intellij"
+    val sourceType: String = "intellij",
+    val readOnly: Boolean = false,
 )
 
 class AiderDeskConnector : CoroutineScope {
@@ -368,7 +369,7 @@ class AiderDeskConnector : CoroutineScope {
         val isWindows = System.getProperty("os.name").lowercase().contains("win")
         val normalizedPath = if (isWindows) message.path.replace("/", "\\") else message.path
         val normalizedBasePath = if (isWindows) message.baseDir.replace("/", "\\") else message.baseDir
-        val normalizedMessage = FileMessage(message.action, normalizedPath, normalizedBasePath, message.sourceType)
+        val normalizedMessage = FileMessage(message.action, normalizedPath, normalizedBasePath, message.sourceType, message.readOnly)
 
         try {
             val jsonMessage = mapper.writeValueAsString(normalizedMessage)

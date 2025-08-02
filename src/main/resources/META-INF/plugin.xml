@@ -26,6 +26,11 @@
   ]]></description>
 
     <change-notes><![CDATA[
+    <p>0.5.0</p>
+    <ul>
+      <li>Added 'Add to Context as Read-only' action.</li>
+    </ul>
+    <br/>
     <p>0.4.0</p>
     <ul>
       <li>Added 'Disconnect' and 'Connect' actions to status bar widget.</li>
@@ -74,6 +79,11 @@
                 text="Add to Context"
                 description="Adds the selected file to the AiderDesk context.">
         </action>
+        <action id="AiderDesk.AddReadOnlyFile"
+                class="com.hotovo.plugins.aiderdesk.actions.AiderDeskAddReadOnlyFileAction"
+                text="Add to Context as Read-only"
+                description="Adds the selected file to the AiderDesk context as read only file.">
+        </action>
         <action id="AiderDesk.DropFile"
                 class="com.hotovo.plugins.aiderdesk.actions.AiderDeskDropFileAction"
                 text="Drop from Context"
@@ -88,6 +98,7 @@
                icon="/META-INF/widgetIcon.svg">
             <reference ref="AiderDesk.AddFile"/>
             <reference ref="AiderDesk.DropFile"/>
+            <reference ref="AiderDesk.AddReadOnlyFile"/>
             <add-to-group group-id="ProjectViewPopupMenu"/>
             <add-to-group group-id="EditorPopupMenu"/>
             <add-to-group group-id="EditorTabPopupMenu"/>
