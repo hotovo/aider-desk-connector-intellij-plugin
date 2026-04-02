@@ -1,5 +1,6 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin url="https://github.com/hotovo/aider-desk-connector-intellij-plugin">
+    <idea-version since-build="261"/>
     <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
     <id>com.hotovo.plugins.aider-desk-connector</id>
 
@@ -26,6 +27,11 @@
   ]]></description>
 
     <change-notes><![CDATA[
+    <p>0.5.1</p>
+    <ul>
+      <li>Added IntelliJ IDEA 2026.1 compatibility update.</li>
+    </ul>
+    <br/>
     <p>0.5.0</p>
     <ul>
       <li>Added 'Add to Context as Read-only' action.</li>
