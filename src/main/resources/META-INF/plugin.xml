@@ -27,9 +27,11 @@
   ]]></description>
 
     <change-notes><![CDATA[
-    <p>0.5.1</p>
+    <p>0.6.1</p>
     <ul>
-      <li>Added IntelliJ IDEA 2026.1 compatibility update.</li>
+      <li>Verified compatibility with IntelliJ IDEA 2026.1.</li>
+      <li>This release now targets IntelliJ IDEA 2026.1 as the minimum supported version.</li>
+      <li>Older IntelliJ IDEA versions were not tested and are not recommended for this release.</li>
     </ul>
     <br/>
     <p>0.5.0</p>
@@ -44,7 +46,7 @@
     <br/>
     <p>0.3.0</p>
     <ul>
-      <li>Added context menu actions for files and directories: 'Add to context' and 'Drop from context'.</li>
+      <li>Added context menu actions for files and directories: 'Add to Context' and 'Drop from Context'.</li>
     </ul>
     <br/>
     <p>0.2.0</p>
@@ -54,7 +56,7 @@
     <br/>
     <p>0.1.1</p>
     <ul>
-      <li>Add Windows support via fixing path handling.</li>
+      <li>Added Windows support by fixing path handling.</li>
     </ul>
     <br/>
     <p>0.1.0</p>
