@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.hotovo.plugins"
-version = "0.6.1"
+version = "0.6.0"
 
 repositories {
     mavenCentral()
