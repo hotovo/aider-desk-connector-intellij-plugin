@@ -331,6 +331,7 @@ class AiderDeskConnector : CoroutineScope {
             val initMessage = mapOf(
                 "action" to "init",
                 "baseDir" to normalizedBasePath,
+                "source" to "intellij",
                 "contextFiles" to contextFiles
             )
             // Only send if connected
