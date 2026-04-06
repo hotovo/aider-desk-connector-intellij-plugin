@@ -241,16 +241,24 @@ class AiderDeskConnector : CoroutineScope {
             }
 
             override fun fileClosed(source: FileEditorManager, file: VirtualFile) {
-                 if (!isRunning || !file.isFile || file.fileType.isBinary) {
+                if (!isRunning || !file.isFile || file.fileType.isBinary) {
                     return
                 }
                 LOG.debug("File closed: ${file.name}")
 
-                val relativePath = project.basePath?.let { basePath ->
-                    Path.of(basePath).relativize(Path.of(file.path)).toString().replace("\\", "/")
-                } ?: return
+                try {
+                    val relativePath = project.basePath?.let { basePath ->
+                        Path.of(basePath).relativize(Path.of(file.path)).toString().replace("\\", "/")
+                    } ?: return
 
-                sendMessage(FileMessage("drop-file", relativePath, project.basePath!!, "intellij"))
+                    sendMessage(FileMessage("drop-file", relativePath, project.basePath!!, "intellij"))
+                } catch (e: IllegalArgumentException) {
+                    if (e.message?.contains("different root") == true) {
+                        LOG.debug("Ignoring file closed event for ${file.path} - different filesystem root")
+                    } else {
+                        throw e
+                    }
+                }
             }
         }
         projectFileEditorListeners[project] = fileEditorListener
