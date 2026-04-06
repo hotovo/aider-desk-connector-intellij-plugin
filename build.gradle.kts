@@ -1,53 +1,54 @@
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.9.25"
-    id("org.jetbrains.intellij") version "1.17.4"
+    id("org.jetbrains.kotlin.jvm") version "2.3.20"
+    id("org.jetbrains.intellij.platform") version "2.10.5"
 }
 
 group = "com.hotovo.plugins"
-version = "0.5.0"
+version = "0.6.1"
 
 repositories {
     mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
-val ktorVersion = "2.3.9"
-val slf4jVersion = "1.7.36"
-val jacksonVersion = "2.15.2"
+val ktorVersion = "3.4.2"
+val slf4jVersion = "2.0.17"
+val jacksonVersion = "3.1.1"
 
 dependencies {
-    implementation("io.socket:socket.io-client:2.1.0")
+    implementation("io.socket:socket.io-client:2.1.2")
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-cio:$ktorVersion")
     implementation("io.ktor:ktor-serialization-jackson:$ktorVersion") {
         exclude(group = "org.slf4j")
     }
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
+    implementation("tools.jackson.module:jackson-module-kotlin:$jacksonVersion")
     implementation("org.slf4j:slf4j-simple:$slf4jVersion")
+
+    intellijPlatform {
+        intellijIdea("2026.1")
+        bundledPlugin("Git4Idea")
+    }
 }
 
-// Configure Gradle IntelliJ Plugin
-// Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
-intellij {
-    version.set("2024.1.7")
-    type.set("IC") // Target IDE Platform
-
-    plugins.set(listOf("Git4Idea"))
-}
 
 tasks {
     // Set the JVM compatibility versions
     withType<JavaCompile> {
-        sourceCompatibility = "17"
-        targetCompatibility = "17"
+        sourceCompatibility = "21"
+        targetCompatibility = "21"
     }
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+        }
     }
 
-    patchPluginXml {
-        sinceBuild.set("232")
-        untilBuild.set("253.*")
+    buildSearchableOptions {
+        enabled = false
     }
 
     signPlugin {
